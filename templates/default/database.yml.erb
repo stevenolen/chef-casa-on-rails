@@ -1,0 +1,10 @@
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: <%= @casa_db_name %>
+  username: <%= @casa_db_user %>
+  password: <%= @casa_db_password %>
+  host: <%= @casa_db_host %>
+  port: <%= @casa_db_port %>

@@ -1,0 +1,7 @@
+name 'casa-on-rails'
+maintainer 'Steve Nolen'
+maintainer_email 'technolengy@gmail.com'
+license 'All rights reserved'
+description 'Installs/Configures casa-on-rails'
+long_description 'Installs/Configures casa-on-rails'
+version '0.1.0'
