@@ -16,7 +16,7 @@ mysql_service 'default' do
 end
 
 execute 'add test db info' do
-  command "sleep 5s; /usr/bin/mysql -h 127.0.0.1 -uroot -pchangeme -e \"CREATE DATABASE casa; GRANT ALL ON casa.* to 'casa' identified by 'tsktsk';\""
+  command "sleep 5s; /usr/bin/mysql -h 127.0.0.1 -uroot -pchangeme -e \"CREATE DATABASE IF NOT EXISTS casa; GRANT ALL ON casa.* to 'casa' identified by 'tsktsk';\""
 end
 
 # actual casa service block
