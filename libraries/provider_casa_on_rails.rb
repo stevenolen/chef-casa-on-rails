@@ -86,6 +86,9 @@ class Chef
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
+        # required headers for mysql2 gem (which gets installed with bundler below)
+        package 'mysql-devel'
+
         # farm out to chef deploy. TODO: make an attribute that only does this once.
         # note namespace "new resource" causes some weird stuff here.
         computed_path = path_plus_bundler
