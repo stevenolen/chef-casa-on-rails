@@ -8,5 +8,5 @@ describe service('casa-default') do
 end
 
 describe command('curl http://localhost:3000') do
-  its(:stdout) { should match(/<title>CASA On Rails<\/title>/) }
+  its(:stdout) { should match(%r{<title>CASA On Rails<\/title>}) }
 end

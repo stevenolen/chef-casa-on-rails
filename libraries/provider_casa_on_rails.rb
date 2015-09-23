@@ -3,7 +3,7 @@ require_relative 'helpers'
 
 class Chef
   class Provider
-    class CasaOnRails < Chef::Provider::LWRPBase
+    class CasaOnRails < Chef::Provider::LWRPBase # rubocop:disable ClassLength
       # Chef 11 LWRP DSL Methods
       use_inline_resources if defined?(use_inline_resources)
 
