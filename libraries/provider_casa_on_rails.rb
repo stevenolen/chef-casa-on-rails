@@ -138,6 +138,23 @@ class Chef
           action [:enable, :start]
         end
       end
+
+      action :delete do
+        # stop service
+        service "casa-#{new_resource.name}" do
+          supports restart: true, status: true
+          action [:disable, :stop]
+        end
+        
+        # delete deploy path and remove init script.
+        directory "#{new_resource.deploy_path}" do
+          action :delete
+        end
+        
+        file "/etc/init.d/casa-#{new_resource.name}" do
+          action :delete
+        end
+      end
     end
   end
 end
