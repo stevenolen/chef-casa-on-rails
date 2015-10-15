@@ -32,6 +32,7 @@ casa_on_rails 'default' do
   secret 'cookiesecretusesomethingrandom'
   contact_name 'Joe Schmoe'
   contact_email 'joe@schmoe.edu'
+  # action :create
 end
 ```
 
@@ -42,7 +43,6 @@ Just like the casa-on-rails app, it's still early days.  I've made a few assumpt
 
   * You will resolve `mysql` and `elasticsearch` dependencies yourself. Take a look in `fixtures/cookbooks/casa_on_rails_test` for some hints on how I'd do that.
   * You will pass the path to your `bundle` bin file. `sysvinit` on centos is extremely minimal in it's path, so if you don't give me your path, the service is probably not going to start! :). Additionally, I have no interest in controlling how you deploy ruby, so casa_on_rails wont configure a ruby for itself!
-  * Although plans are there to define `:create`, `:upgrade`, and `:delete` resources, only `:create` has been created. Additionally, create will likely be used in the future to guard against deploying the code a second time (so you can be free to deploy via capistrano or other means). You would use `:upgrade` to stick to "master", or if you'd like to use a tag/revision and swap to a new one!
 
 ## License and Authors
 

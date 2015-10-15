@@ -4,7 +4,7 @@ class Chef
   class Resource
     class CasaOnRails < Chef::Resource::LWRPBase
       self.resource_name = :casa_on_rails
-      actions :create, :upgrade, :delete
+      actions :create, :delete
       default_action :create
 
       attribute :name, kind_of: String, name_attribute: true
