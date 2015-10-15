@@ -7,6 +7,6 @@ describe service('casa-default') do
   it { should be_running }
 end
 
-describe command('curl http://localhost:3000') do
-  its(:stdout) { should match(%r{<title>CASA On Rails<\/title>}) }
+describe command('curl http://localhost:3000/status.json') do
+  its(:stdout) { should match(%r{\{"revision":}) }
 end

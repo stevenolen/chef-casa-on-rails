@@ -1,0 +1,10 @@
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+casa:
+  engine:
+    uuid: '<%= @casa_uuid %>'
+
+store:
+  user_contact:
+    - name: '<%= @casa_contact_name %>'
+      email: '<%= @casa_contact_email %>'

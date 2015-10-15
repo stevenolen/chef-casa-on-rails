@@ -32,7 +32,7 @@ class Chef
         end
 
         # add shared dirs for chef deploy
-        %w(config/environments config/initializers pids log).each do |d|
+        %w(config pids log).each do |d|
           directory "#{new_resource.deploy_path}/shared/#{d}" do
             recursive true
           end
@@ -62,9 +62,9 @@ class Chef
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
-        # generate environment file.
-        template "#{new_resource.deploy_path}/shared/config/environments/#{new_resource.rails_env}.rb" do
-          source 'environment.rb.erb'
+        # generate casa config.
+        template "#{new_resource.deploy_path}/shared/config/casa.yml" do
+          source 'casa.yml.erb'
           cookbook 'casa-on-rails'
           variables(
             casa_uuid: new_resource.uuid,
@@ -75,8 +75,8 @@ class Chef
         end
 
         # generate ES config file, only supports one instance currently.
-        template "#{new_resource.deploy_path}/shared/config/initializers/elasticsearch.rb" do
-          source 'elasticsearch.rb.erb'
+        template "#{new_resource.deploy_path}/shared/config//elasticsearch.yml" do
+          source 'elasticsearch.yml.erb'
           cookbook 'casa-on-rails'
           variables(
             casa_es_host: new_resource.es_host,
@@ -99,8 +99,8 @@ class Chef
           revision casa_resource.revision
           symlink_before_migrate(
             'config/database.yml' => 'config/database.yml',
-            "config/environments/#{casa_resource.rails_env}.rb" => "config/environments/#{casa_resource.rails_env}.rb",
-            'config/initializers/elasticsearch.rb' => 'config/initializers/elasticsearch.rb',
+            'config/casa.yml' => 'config/casa.yml',
+            'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/secrets.yml' => 'config/secrets.yml',
             'bundle' => '.bundle'
           )
@@ -121,7 +121,7 @@ class Chef
           end
           migrate true
           migration_command "RAILS_ENV=#{casa_resource.rails_env} bundle exec rake db:migrate"
-          purge_before_symlink %w(log tmp/pids public/system config/database.yml config/secrets.yml config/environments/#{casa_resource.rails_env}.rb config/initializers/elasticsearch.rb)
+          purge_before_symlink %w(log tmp/pids public/system config/database.yml config/secrets.yml)
           before_symlink do
             execute 'db:seed' do
               environment 'PATH' => computed_path
