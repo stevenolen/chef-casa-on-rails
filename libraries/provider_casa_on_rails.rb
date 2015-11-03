@@ -120,8 +120,8 @@ class Chef
           deploy_to casa_resource.deploy_path
           repo casa_resource.repo
           revision casa_resource.revision
-          user new_resource.run_user
-          group new_resource.run_group
+          user casa_resource.run_user
+          group casa_resource.run_group
           symlink_before_migrate(
             'config/database.yml' => 'config/database.yml',
             'config/casa.yml' => 'config/casa.yml',
