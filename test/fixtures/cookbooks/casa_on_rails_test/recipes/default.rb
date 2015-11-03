@@ -1,7 +1,7 @@
 # install ruby with rbenv, java, npm, git, mysql-server and set up db.
 node.default['rbenv']['rubies'] = ['2.1.7']
 include_recipe 'ruby_build'
-include_recipe 'rbenv::system'
+include_recipe 'ruby_rbenv::system'
 include_recipe 'nodejs::npm'
 package 'java-1.7.0-openjdk'
 package 'git'
@@ -27,4 +27,5 @@ casa_on_rails 'default' do
   contact_name 'Steve Nolen'
   contact_email 'technolengy@gmail.com'
   bundler_path '/usr/local/rbenv/shims'
+  es_host 'elasticsearch' # linked docker container
 end
