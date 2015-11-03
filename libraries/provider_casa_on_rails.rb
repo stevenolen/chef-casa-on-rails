@@ -15,6 +15,18 @@ class Chef
       include CasaOnRailsCookbook::Helpers
 
       action :create do
+        # casa user
+        group "#{new_resource.name} :create casa" do
+          group_name new_resource.run_group
+          action :create
+        end
+
+        user "#{new_resource.name} :create casa" do
+          username new_resource.run_user
+          gid 'casa' if new_resource.run_user == 'casa'
+          action :create
+        end
+
         # init file for service, abstract to support deb and rhel7
         template "/etc/init.d/casa-#{new_resource.name}" do
           owner 'root'
@@ -23,6 +35,7 @@ class Chef
           source 'sysvinit.erb'
           cookbook 'casa-on-rails'
           variables(
+            config: new_resource,
             name: new_resource.name,
             app_path: "#{new_resource.deploy_path}/current",
             port: new_resource.port,
@@ -35,12 +48,16 @@ class Chef
         %w(config pids log).each do |d|
           directory "#{new_resource.deploy_path}/shared/#{d}" do
             recursive true
+            owner new_resource.run_user
+            group new_resource.run_group
           end
         end
 
         # database.yml
         template "#{new_resource.deploy_path}/shared/config/database.yml" do
           source 'database.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
           cookbook 'casa-on-rails'
           variables(
             casa_db_password: new_resource.db_password,
@@ -55,6 +72,8 @@ class Chef
         # secrets
         template "#{new_resource.deploy_path}/shared/config/secrets.yml" do
           source 'secrets.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
           cookbook 'casa-on-rails'
           variables(
             casa_secret: new_resource.secret
@@ -65,6 +84,8 @@ class Chef
         # generate casa config.
         template "#{new_resource.deploy_path}/shared/config/casa.yml" do
           source 'casa.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
           cookbook 'casa-on-rails'
           variables(
             casa_uuid: new_resource.uuid,
@@ -75,8 +96,10 @@ class Chef
         end
 
         # generate ES config file, only supports one instance currently.
-        template "#{new_resource.deploy_path}/shared/config//elasticsearch.yml" do
+        template "#{new_resource.deploy_path}/shared/config/elasticsearch.yml" do
           source 'elasticsearch.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
           cookbook 'casa-on-rails'
           variables(
             casa_es_host: new_resource.es_host,
@@ -97,6 +120,8 @@ class Chef
           deploy_to casa_resource.deploy_path
           repo casa_resource.repo
           revision casa_resource.revision
+          user new_resource.run_user
+          group new_resource.run_group
           symlink_before_migrate(
             'config/database.yml' => 'config/database.yml',
             'config/casa.yml' => 'config/casa.yml',

@@ -11,6 +11,8 @@ class Chef
       attribute :repo, kind_of: String, default: 'https://github.com/ucla/casa-on-rails.git'
       attribute :revision, kind_of: String, default: '114d4a86dc67567abbba9fbff8366f175551e99d'
       attribute :port, kind_of: Integer, default: 3000
+      attribute :run_user, kind_of: String, default: 'casa'
+      attribute :run_group, kind_of: String, default: 'casa'
       attribute :db_host, kind_of: String, default: '127.0.0.1'
       attribute :db_port, kind_of: Integer, default: 3306
       attribute :db_name, kind_of: String, default: 'casa' # set to name attr?

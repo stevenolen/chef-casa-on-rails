@@ -17,9 +17,11 @@ casa_on_rails 'default' do
   # repo 'https://github.com/ucla/casa-on-rails.git'
   # revision '1.1.12'
   # port 3000
+  # run_user 'casa' # if != 'casa', will not be added to run_group on creation.
+  # run_group 'casa'
   # db_host '127.0.0.1'
   # db_port 3306
-  # db_name 'casa' # set to name attr?
+  # db_name 'casa'
   # db_user 'casa'
   # db_password 'tsktsk'
   # es_host '127.0.0.1'
@@ -46,5 +48,5 @@ Just like the casa-on-rails app, it's still early days.  I've made a few assumpt
 
 ## License and Authors
 
-License:: All rights reserved?
+License:: Apache 2.0, see `LICENSE` file for text.
 Author:: Steve Nolen (<technolengy@gmail.com>)
