@@ -34,17 +34,16 @@ class Chef
           mode '0755'
           source 'sysvinit.erb'
           cookbook 'casa-on-rails'
-          variables(
-            config: new_resource,
-            name: new_resource.name,
-            app_path: "#{new_resource.deploy_path}/current",
-            port: new_resource.port,
-            rails_env: new_resource.rails_env,
-            ruby_exec_path: new_resource.bundler_path
-          )
+          variables(config: new_resource)
         end
 
         # add shared dirs for chef deploy
+        directory "#{new_resource.deploy_path}/shared" do
+          recursive true
+          owner new_resource.run_user
+          group new_resource.run_group
+        end
+
         %w(config pids log).each do |d|
           directory "#{new_resource.deploy_path}/shared/#{d}" do
             recursive true
@@ -59,13 +58,7 @@ class Chef
           owner new_resource.run_user
           group new_resource.run_group
           cookbook 'casa-on-rails'
-          variables(
-            casa_db_password: new_resource.db_password,
-            casa_db_user: new_resource.db_user,
-            casa_db_name: new_resource.db_name,
-            casa_db_host: new_resource.db_host,
-            casa_db_port: new_resource.db_port
-          )
+          variables(config: new_resource)
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
@@ -75,9 +68,7 @@ class Chef
           owner new_resource.run_user
           group new_resource.run_group
           cookbook 'casa-on-rails'
-          variables(
-            casa_secret: new_resource.secret
-          )
+          variables(config: new_resource)
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
@@ -87,11 +78,7 @@ class Chef
           owner new_resource.run_user
           group new_resource.run_group
           cookbook 'casa-on-rails'
-          variables(
-            casa_uuid: new_resource.uuid,
-            casa_contact_name: new_resource.contact_name,
-            casa_contact_email: new_resource.contact_email
-          )
+          variables(config: new_resource)
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
@@ -101,11 +88,7 @@ class Chef
           owner new_resource.run_user
           group new_resource.run_group
           cookbook 'casa-on-rails'
-          variables(
-            casa_es_host: new_resource.es_host,
-            casa_es_port: new_resource.es_port,
-            casa_es_index: new_resource.es_index
-          )
+          variables(config: new_resource)
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
