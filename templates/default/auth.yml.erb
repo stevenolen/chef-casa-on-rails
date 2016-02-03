@@ -1,0 +1,45 @@
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+oauth2:
+  provider:
+    shibboleth:
+      <% if @config.shib_client_name.nil? %>
+      enabled: false
+      <% else %>
+      enabled: true
+      <% end %>
+      key: <%= @config.shib_client_name %>
+      secret: <%= @config.shib_secret %>
+      properties:
+        site: <%= @config.shib_site %>
+        authorize_url: /oauth2/test-authorize
+        token_url: /oauth2/access_token
+      routes:
+        get_user: /oauth2/user
+      <% unless @config.shib_restrict_edupersonprincipalname.nil? and @config.shib_restrict_edupersonscopedaffiliation.nil? %>
+      restrict_to:
+      <% end %>
+      <% unless @config.shib_restrict_edupersonprincipalname.nil? %>
+        eduPersonPrinicipalName:
+          <% if @config.shib_restrict_edupersonprincipalname.respond_to?(:each) %>
+          <% @config.shib_restrict_edupersonprincipalname.each do |name| %>
+          - <%= name %>
+          <% end %>
+          <% else %>
+          - <%= @config.shib_restrict_edupersonprincipalname %>
+          <% end %>
+      <% end %>
+      <% unless @config.shib_restrict_edupersonscopedaffiliation.nil? %>
+        eduPersonScopeAffiliation:
+          <% if @config.shib_restrict_edupersonscopedaffiliation.respond_to?(:each) %>
+          <% @config.shib_restrict_edupersonscopedaffiliation.each do |name| %>
+          - <%= name %>
+          <% end %>
+          <% else %>
+          - <%= @config.shib_restrict_edupersonscopedaffiliation %>
+          <% end %>
+      <% end %>
+
+login_route:
+  - session_oauth2_launch_url
+  - shibboleth

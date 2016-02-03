@@ -92,6 +92,16 @@ class Chef
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
+        # generate shib config file.
+        template "#{new_resource.deploy_path}/shared/config/auth.yml" do
+          source 'auth.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
+          cookbook 'casa-on-rails'
+          variables(config: new_resource)
+          notifies :restart, "service[casa-#{new_resource.name}]", :delayed
+        end
+
         # required headers for mysql2 gem (which gets installed with bundler below)
         package 'mysql-devel'
 
@@ -110,6 +120,7 @@ class Chef
             'config/casa.yml' => 'config/casa.yml',
             'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/secrets.yml' => 'config/secrets.yml',
+            'config/auth.yml' => 'config/auth.yml',
             'bundle' => '.bundle'
           )
           before_migrate do

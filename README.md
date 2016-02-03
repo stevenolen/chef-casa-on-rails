@@ -15,7 +15,7 @@ Instantiate a casa on rails instance with this resource.  Note the defaults are 
 ```ruby
 casa_on_rails 'default' do
   # repo 'https://github.com/ucla/casa-on-rails.git'
-  # revision '1.1.12'
+  # revision 'master'
   # port 3000
   # run_user 'casa' # if != 'casa', will not be added to run_group on creation.
   # run_group 'casa'
@@ -34,6 +34,10 @@ casa_on_rails 'default' do
   secret 'cookiesecretusesomethingrandom'
   contact_name 'Joe Schmoe'
   contact_email 'joe@schmoe.edu'
+  # shib_client_name nil
+  # shib_secret nil
+  # shib_restrict_edupersonprincipalname nil
+  # shib_restrcit_edupersonscopedaffiliation nil
   # action :create
 end
 ```
@@ -45,6 +49,7 @@ Just like the casa-on-rails app, it's still early days.  I've made a few assumpt
 
   * You will resolve `mysql` and `elasticsearch` dependencies yourself. Take a look in `fixtures/cookbooks/casa_on_rails_test` for some hints on how I'd do that.
   * You will pass the path to your `bundle` bin file. `sysvinit` on centos is extremely minimal in it's path, so if you don't give me your path, the service is probably not going to start! :). Additionally, I have no interest in controlling how you deploy ruby, so casa_on_rails wont configure a ruby for itself!
+  * If you want to use the shib bridge configured for other rails apps in this domain, take a look at the attributes commented above. Note the `restrict` attributes accept either a string or array.
 
 ## License and Authors
 

@@ -9,7 +9,7 @@ class Chef
 
       attribute :name, kind_of: String, name_attribute: true
       attribute :repo, kind_of: String, default: 'https://github.com/ucla/casa-on-rails.git'
-      attribute :revision, kind_of: String, default: '95db10368b7f3fbe457f07bfdc8505f30e9e6467'
+      attribute :revision, kind_of: String, default: 'master'
       attribute :port, kind_of: Integer, default: 3000
       attribute :run_user, kind_of: String, default: 'casa'
       attribute :run_group, kind_of: String, default: 'casa'
@@ -28,6 +28,11 @@ class Chef
       attribute :secret, kind_of: String, required: true
       attribute :contact_name, kind_of: String, required: true
       attribute :contact_email, kind_of: String, required: true
+      attribute :shib_secret, kind_of: String, default: nil
+      attribute :shib_client_name, kind_of: String, default: nil
+      attribute :shib_site, kind_of: String, default: nil
+      attribute :shib_restrict_edupersonprincipalname, kind_of: [String, Array], default: nil
+      attribute :shib_restrict_edupersonscopedaffiliation, kind_of: [String, Array], default: nil
     end
   end
 end
