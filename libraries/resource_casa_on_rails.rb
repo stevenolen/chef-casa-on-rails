@@ -33,6 +33,9 @@ class Chef
       attribute :shib_site, kind_of: String, default: nil
       attribute :shib_restrict_edupersonprincipalname, kind_of: [String, Array], default: nil
       attribute :shib_restrict_edupersonscopedaffiliation, kind_of: [String, Array], default: nil
+      attribute :caliper_url, kind_of: String, default: nil
+      attribute :caliper_api_key, kind_of: String, default: nil
+      attribute :caliper_sensor_id, kind_of: String, default: nil
     end
   end
 end

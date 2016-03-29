@@ -102,6 +102,16 @@ class Chef
           notifies :restart, "service[casa-#{new_resource.name}]", :delayed
         end
 
+        # generate caliper config file.
+        template "#{new_resource.deploy_path}/shared/config/caliper.yml" do
+          source 'caliper.yml.erb'
+          owner new_resource.run_user
+          group new_resource.run_group
+          cookbook 'casa-on-rails'
+          variables(config: new_resource)
+          notifies :restart, "service[casa-#{new_resource.name}]", :delayed
+        end
+
         # required headers for mysql2 gem (which gets installed with bundler below)
         package 'mysql-devel'
 
@@ -121,6 +131,7 @@ class Chef
             'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/secrets.yml' => 'config/secrets.yml',
             'config/auth.yml' => 'config/auth.yml',
+            'config/caliper.yml' => 'config/caliper.yml',
             'bundle' => '.bundle'
           )
           before_migrate do
@@ -132,7 +143,7 @@ class Chef
             execute 'npm install' do
               cwd release_path
             end
-            execute 'block build' do
+            execute 'blocks build' do
               environment 'PATH' => computed_path
               cwd release_path
               command 'bundle exec blocks build'
