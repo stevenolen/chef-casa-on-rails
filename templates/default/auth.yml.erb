@@ -41,5 +41,9 @@ oauth2:
       <% end %>
 
 login_route:
+<% if @config.shib_client_name.nil? %>
+  - session_url
+<% else %>
   - session_oauth2_launch_url
   - shibboleth
+<% end %>
