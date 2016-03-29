@@ -9,7 +9,7 @@ class Chef
 
       attribute :name, kind_of: String, name_attribute: true
       attribute :repo, kind_of: String, default: 'https://github.com/ucla/casa-on-rails.git'
-      attribute :revision, kind_of: String, default: 'master'
+      attribute :revision, kind_of: String, default: '1.2.0'
       attribute :port, kind_of: Integer, default: 3000
       attribute :run_user, kind_of: String, default: 'casa'
       attribute :run_group, kind_of: String, default: 'casa'
