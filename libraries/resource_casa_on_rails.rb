@@ -36,6 +36,7 @@ class Chef
       attribute :caliper_url, kind_of: String, default: nil
       attribute :caliper_api_key, kind_of: String, default: nil
       attribute :caliper_sensor_id, kind_of: String, default: nil
+      attribute :fqdn, kind_of: String, default: nil
     end
   end
 end

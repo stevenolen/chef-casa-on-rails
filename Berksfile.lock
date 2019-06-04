@@ -17,7 +17,7 @@ GRAPH
     windows (>= 0.0.0)
   build-essential (3.2.0)
     seven_zip (>= 0.0.0)
-  casa-on-rails (0.5.8)
+  casa-on-rails (0.6.2)
   casa_on_rails_test (0.0.1)
     casa-on-rails (>= 0.0.0)
     mysql (~> 6.0)
