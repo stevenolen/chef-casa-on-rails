@@ -28,11 +28,7 @@ class Chef
       attribute :secret, kind_of: String, required: true
       attribute :contact_name, kind_of: String, required: true
       attribute :contact_email, kind_of: String, required: true
-      attribute :shib_secret, kind_of: String, default: nil
-      attribute :shib_client_name, kind_of: String, default: nil
-      attribute :shib_site, kind_of: String, default: nil
-      attribute :shib_restrict_edupersonprincipalname, kind_of: [String, Array], default: nil
-      attribute :shib_restrict_edupersonscopedaffiliation, kind_of: [String, Array], default: nil
+      attribute :keycloak_site, kind_of: String, default: nil
       attribute :caliper_url, kind_of: String, default: nil
       attribute :caliper_api_key, kind_of: String, default: nil
       attribute :caliper_sensor_id, kind_of: String, default: nil

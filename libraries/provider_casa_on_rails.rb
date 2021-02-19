@@ -140,13 +140,12 @@ class Chef
               cwd release_path
               command "bundle install --path #{casa_resource.deploy_path}/shared/bundle"
             end
-            execute 'npm install' do
-              cwd release_path
-            end
-            execute 'blocks build' do
+          end
+          before_restart do
+            execute 'precompile assets' do
               environment 'PATH' => computed_path
               cwd release_path
-              command 'bundle exec blocks build'
+              command "RAILS_ENV=#{casa_resource.rails_env} bundle exec rake assets:precompile"
             end
           end
           migrate true
